@@ -1,0 +1,18 @@
+web:
+  build: web
+  environment:
+    VIRTUAL_HOST: "*/*"
+api:
+  build: api
+  environment:
+    VIRTUAL_HOST: "*/api, */api/*"
+    ASPNET_ENV: Development
+  ports:
+    - "5000:5000"
+proxy:
+  image: tutum/haproxy
+  links:
+    - web
+    - api
+  ports:
+    - "3000:80"
